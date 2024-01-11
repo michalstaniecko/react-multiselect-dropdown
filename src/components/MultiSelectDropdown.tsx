@@ -8,12 +8,15 @@ export type TOption = {
   isSelected: boolean
 }
 
-export interface IOptions {
-  options: TOption[]
+export type TSelectedOptions = string[];
+
+export interface IMultiSelectDropdown {
+  options: TOption[],
+  onChange: (values: string[]) => void
 }
 
-function MultiSelectDropdown({options}: IOptions) {
-  const [selectedOptions, setSelectedOptions] = useState<string[]>(() => {
+function MultiSelectDropdown({options, onChange}: IMultiSelectDropdown) {
+  const [selectedOptions, setSelectedOptions] = useState<TSelectedOptions>(() => {
     return options.reduce((acc: string[], current) => {
       if (current.isSelected) acc.push(current.value);
       return acc;
@@ -68,6 +71,10 @@ function MultiSelectDropdown({options}: IOptions) {
   useEffect(() => {
     handleSearch('');
   }, []);
+
+  useEffect(() => {
+    onChange(selectedOptions);
+  }, [selectedOptions]);
 
   return (
     <div className={'multiselect-dropdown'}>

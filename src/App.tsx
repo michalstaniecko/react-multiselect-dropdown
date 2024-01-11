@@ -1,5 +1,5 @@
 import './App.css'
-import MultiSelectDropdown, {TOption} from "./components/MultiSelectDropdown.tsx";
+import MultiSelectDropdown, {TOption, TSelectedOptions} from "./components/MultiSelectDropdown.tsx";
 
 const options: TOption[] = [
   {
@@ -31,9 +31,13 @@ const options: TOption[] = [
 
 function App() {
 
+  function handleOnChange(values: TSelectedOptions) {
+    console.log('handleOnChange', values);
+  }
+
   return (
     <>
-      <MultiSelectDropdown options={options} />
+      <MultiSelectDropdown options={options} onChange={handleOnChange}/>
     </>
   )
 }
